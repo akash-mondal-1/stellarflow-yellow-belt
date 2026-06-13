@@ -1,110 +1,204 @@
-# StellarFlow Live Crowdfunding
+# StellarFlow – Decentralized Crowdfunding on Stellar
 
-StellarFlow is a modern, decentralized crowdfunding platform built on the Stellar network using Soroban Smart Contracts. This project is a submission for the Stellar Level 2 challenge.
+A multi-wallet crowdfunding dApp built on the Stellar Network using Soroban Smart Contracts, React, TypeScript, and Stellar Wallets Kit.
 
-## Architecture
+This project was developed for the Stellar Developers Yellow Belt Level 2 Challenge.
 
-```mermaid
-graph TD
-    A[React/Vite Frontend] -->|Stellar SDK| B(Soroban RPC endpoint)
-    A -->|Stellar Wallets Kit| C{Wallet}
-    C -->|Sign Tx| B
-    B -->|Submit Tx| D[Stellar Testnet]
-    D -->|Deploy & Invoke| E(Crowdfund Contract)
-    E -->|Emit Event| B
-    B -->|Polling getEvents| A
-```
+---
 
 ## Features
-- **Multi-Wallet Support**: Seamlessly connect with Freighter, xBull, and Albedo via `@creit.tech/stellar-wallets-kit`.
-- **Soroban Smart Contract**: Fully functional Rust smart contract handling campaign logic, donations, and event emissions.
-- **Real-Time Activity Feed**: Listens to Soroban RPC events to display donations live as they happen.
-- **Glassmorphism UI**: Beautiful, responsive, mobile-first design leveraging Tailwind CSS with dynamic animations.
-- **Robust Error Handling**: Graceful handling of user rejections, insufficient balances, and network errors with elegant toast notifications.
-- **Transaction Tracking**: Direct integration with Stellar Expert to track transaction status in real time.
 
-## Reviewer Instructions
+### Multi-Wallet Support
 
-> [!TIP]
-> **Demo Mode vs Connected Mode**
-> - **Demo Mode**: If no valid `VITE_CONTRACT_ID` is provided, the app intelligently falls back to a simulated safe mode. You can test the wallet connection, UI layout, and "donate" flow. The transaction is intercepted before ledger submission and simulated locally so you can still observe the real-time UI synchronization without needing Testnet XLM.
-> - **Connected Mode**: Deploy your own contract, set `VITE_CONTRACT_ID`, and the app fully connects to Soroban!
+* Freighter
+* xBull
+* Albedo
 
-**Verification Steps for Full Flow:**
-1. Connect Freighter wallet.
-2. Observe the **Reviewer Verification Dashboard** displaying "Stellar Testnet" and "Connected" (or "Demo").
-3. Input 1 XLM and click Donate.
-4. Approve the transaction in your wallet.
-5. Watch the **Transaction Activity** panel flip to `Pending ⏳` and then `Success ✅`.
-6. Watch the Raised Amount, Progress Bar, and Donor Count update instantly without a page refresh!
-7. Watch the **Event Emitted** and **Live Activity Feed** populate your latest transaction automatically.
+### Smart Contract Integration
 
-## Screenshots
+* Soroban Smart Contract written in Rust
+* Contract deployed on Stellar Testnet
+* Real blockchain transactions
+* Contract state fetched directly from the ledger
 
-### Live Donation Success Flow
-![StellarFlow Donation Success](/C:/Users/Asus/.gemini/antigravity-ide/brain/23e6a818-3d73-4214-8396-76ae56531724/stellarflow_donation_success_1781286579640.png)
+### Real-Time Activity Feed
 
-## Smart Contract Details
-- **Testnet Contract ID**: `[USER_MUST_DEPLOY]`
-- **Sample Contract Call Transaction Hash**: `[USER_MUST_DEPLOY]`
-- **Asset**: Native XLM `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
+* Live donation tracking
+* Real transaction hashes
+* Real donor wallet addresses
+* Real Soroban event integration
 
-## Tech Stack
-- **Frontend**: React, TypeScript, Vite, Tailwind CSS, Lucide React
-- **Stellar**: `stellar-sdk`, `@creit.tech/stellar-wallets-kit`
-- **Smart Contract**: Rust, Soroban SDK
+### Transaction Tracking
 
-## Quick Start & Deployment
+* Pending
+* Success
+* Failed
 
-### 1. Smart Contract Deployment (Checklist)
-Ensure you have Rust, Cargo, and the `stellar` CLI installed.
+### Error Handling
+
+Implemented and tested:
+
+1. Wallet not installed
+2. Wallet connection rejected
+3. Insufficient balance
+4. Transaction submission failure
+5. Network/RPC failure
+
+### Responsive UI
+
+* Glassmorphism design
+* Mobile friendly
+* React + TailwindCSS
+
+---
+
+# Smart Contract Information
+
+## Contract Address
+
+CCC7RME6HJVMKMRRUOMWUKGZKKWRAZLJ3SWN5GDU2Y5D4FCMCZ7N53PU
+
+## Contract Explorer
+
+https://lab.stellar.org/contract/CCC7RME6HJVMKMRRUOMWUKGZKKWRAZLJ3SWN5GDU2Y5D4FCMCZ7N53PU
+
+## Verified Contract Transaction
+
+Transaction Hash:
+
+c2e843a080652841a358e6885498fabfa8548b045c576e1810d1474b8ba2f9f0
+
+Explorer:
+
+https://stellar.expert/explorer/testnet/tx/c2e843a080652841a358e6885498fabfa8548b045c576e1810d1474b8ba2f9f0
+
+---
+
+# Architecture
+
+Frontend (React/Vite)
+↓
+Stellar Wallets Kit
+↓
+Soroban RPC
+↓
+Crowdfund Smart Contract
+↓
+Contract Events
+↓
+Live Activity Feed
+
+---
+
+# Screenshots
+
+## Wallet Selection
+
+![Wallet Selection](screenshots/wallet-connect.png)
+
+## Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+## Successful Donation
+
+![Donation Success](screenshots/donation-success.png)
+
+## Explorer Verification
+
+![Explorer Verification](screenshots/explorer-proof.png)
+
+---
+
+# Technology Stack
+
+## Frontend
+
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* Framer Motion
+
+## Blockchain
+
+* Stellar Testnet
+* Soroban
+* Stellar Wallets Kit
+* Stellar SDK
+
+## Smart Contract
+
+* Rust
+* Soroban SDK
+
+---
+
+# Local Development
+
+## Clone Repository
+
 ```bash
-# 1. Generate identity
-stellar keys generate deployer
-
-# 2. Fund identity
-stellar keys fund deployer --network testnet
-
-# 3. Add wasm target
-cd contracts/crowdfund
-rustup target add wasm32-unknown-unknown
-
-# 4. Build contract
-stellar contract build
-
-# 5. Deploy to testnet
-stellar contract deploy \
-  --wasm target/wasm32-unknown-unknown/release/crowdfund.wasm \
-  --source deployer \
-  --network testnet
+git clone <repository-url>
+cd stellarflow
 ```
 
-### 2. Frontend Local Setup
+## Install Dependencies
+
 ```bash
 cd frontend
-npm install --ignore-scripts
+npm install
+```
+
+## Environment Variables
+
+Create:
+
+```env
+frontend/.env
+```
+
+Add:
+
+```env
+VITE_CONTRACT_ID=CCC7RME6HJVMKMRRUOMWUKGZKKWRAZLJ3SWN5GDU2Y5D4FCMCZ7N53PU
+```
+
+## Run Frontend
+
+```bash
 npm run dev
 ```
 
-### 3. Vercel Production Deployment
-This repository is fully configured for Vercel deployment with a `vercel.json` file.
-1. Connect this repository to Vercel.
-2. Ensure the Framework Preset is set to **Vite**.
-3. Build Command: `npm run build`
-4. Output Directory: `dist`
-5. Add the necessary environment variables below.
+---
 
-### Environment Variables
-Configure the following in your `.env` (currently hardcoded for Testnet):
-```env
-VITE_NETWORK_PASSPHRASE="Test SDF Network ; September 2015"
-VITE_SOROBAN_RPC_URL="https://soroban-testnet.stellar.org"
-VITE_CONTRACT_ID="<PASTE_NEW_CONTRACT_ID_HERE>"
+# Smart Contract Build
+
+```bash
+cd contracts/crowdfund
+
+stellar contract build
 ```
 
-## Troubleshooting
+---
 
-- **npm install fails**: If `npm install` fails due to `yarn setup` on `@trezor` or legacy stellar dependencies, run `npm install --ignore-scripts` to bypass problematic pre-build scripts.
-- **Wallet Not Connected Error**: Ensure your Freighter/xBull extension is unlocked and configured to the **Testnet** network.
-- **Simulation Failed**: Usually means the selected account lacks XLM on the testnet. Use the Stellar Laboratory Friendbot to fund your account.
-- **Events Not Appearing**: The contract emits `DonationMade`. Ensure `VITE_CONTRACT_ID` is accurately matched to the deployed contract.
+# Yellow Belt Requirement Verification
+
+| Requirement                   | Status |
+| ----------------------------- | ------ |
+| Contract Deployed on Testnet  | ✅      |
+| Contract Called from Frontend | ✅      |
+| Transaction Status Visible    | ✅      |
+| Multi Wallet Support          | ✅      |
+| Real-Time Event Integration   | ✅      |
+| Error Handling (3+)           | ✅      |
+| Public GitHub Repository      | ✅      |
+| README Documentation          | ✅      |
+
+---
+
+# Author
+
+Akash Mondal
+
+Built for Stellar Developers Yellow Belt Level 2 Challenge.
