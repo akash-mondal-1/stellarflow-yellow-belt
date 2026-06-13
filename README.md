@@ -1,12 +1,20 @@
 # StellarFlow – Decentralized Crowdfunding on Stellar
 
-A multi-wallet crowdfunding dApp built on the Stellar Network using Soroban Smart Contracts, React, TypeScript, and Stellar Wallets Kit.
+A decentralized crowdfunding platform built on the Stellar Network using Soroban Smart Contracts, React, TypeScript, and Stellar Wallets Kit.
 
-This project was developed for the Stellar Developers Yellow Belt Level 2 Challenge.
+Developed for the **Stellar Developers Yellow Belt Level 2 Challenge**.
 
 ---
 
-## Features
+# Live Demo
+
+**Vercel Deployment**
+
+https://stellarflow-yellow-belt-ocoiedpqw-akash-mondal-1s-projects.vercel.app/
+
+---
+
+# Features
 
 ### Multi-Wallet Support
 
@@ -14,19 +22,20 @@ This project was developed for the Stellar Developers Yellow Belt Level 2 Challe
 * xBull
 * Albedo
 
-### Smart Contract Integration
+### Soroban Smart Contract Integration
 
-* Soroban Smart Contract written in Rust
-* Contract deployed on Stellar Testnet
+* Rust-based Soroban smart contract
+* Deployed on Stellar Testnet
 * Real blockchain transactions
-* Contract state fetched directly from the ledger
+* On-chain campaign state management
+* Contract event emission
 
 ### Real-Time Activity Feed
 
 * Live donation tracking
 * Real transaction hashes
 * Real donor wallet addresses
-* Real Soroban event integration
+* Soroban event monitoring
 
 ### Transaction Tracking
 
@@ -38,15 +47,16 @@ This project was developed for the Stellar Developers Yellow Belt Level 2 Challe
 
 Implemented and tested:
 
-1. Wallet not installed
-2. Wallet connection rejected
-3. Insufficient balance
-4. Transaction submission failure
-5. Network/RPC failure
+* Wallet not installed
+* Wallet connection rejected
+* Insufficient balance
+* Transaction submission failure
+* RPC / Network failure
 
-### Responsive UI
+### Modern UI
 
 * Glassmorphism design
+* Responsive layout
 * Mobile friendly
 * React + TailwindCSS
 
@@ -56,19 +66,23 @@ Implemented and tested:
 
 ## Contract Address
 
+```text
 CCC7RME6HJVMKMRRUOMWUKGZKKWRAZLJ3SWN5GDU2Y5D4FCMCZ7N53PU
+```
 
-## Contract Explorer
+## Sample Verified Transaction
+
+```text
+c2e843a080652841a358e6885498fabfa8548b045c576e1810d1474b8ba2f9f0
+```
+
+## Stellar Explorer Verification
+
+Contract:
 
 https://lab.stellar.org/contract/CCC7RME6HJVMKMRRUOMWUKGZKKWRAZLJ3SWN5GDU2Y5D4FCMCZ7N53PU
 
-## Verified Contract Transaction
-
-Transaction Hash:
-
-c2e843a080652841a358e6885498fabfa8548b045c576e1810d1474b8ba2f9f0
-
-Explorer:
+Transaction:
 
 https://stellar.expert/explorer/testnet/tx/c2e843a080652841a358e6885498fabfa8548b045c576e1810d1474b8ba2f9f0
 
@@ -76,17 +90,24 @@ https://stellar.expert/explorer/testnet/tx/c2e843a080652841a358e6885498fabfa8548
 
 # Architecture
 
-Frontend (React/Vite)
-↓
+```text
+React + Vite Frontend
+        │
+        ▼
 Stellar Wallets Kit
-↓
+        │
+        ▼
 Soroban RPC
-↓
+        │
+        ▼
 Crowdfund Smart Contract
-↓
+        │
+        ▼
 Contract Events
-↓
+        │
+        ▼
 Live Activity Feed
+```
 
 ---
 
@@ -124,8 +145,8 @@ Live Activity Feed
 
 * Stellar Testnet
 * Soroban
-* Stellar Wallets Kit
 * Stellar SDK
+* Stellar Wallets Kit
 
 ## Smart Contract
 
@@ -134,7 +155,7 @@ Live Activity Feed
 
 ---
 
-# Local Development
+# Local Setup
 
 ## Clone Repository
 
@@ -150,21 +171,23 @@ cd frontend
 npm install
 ```
 
-## Environment Variables
+## Create Environment File
 
 Create:
 
-```env
+```bash
 frontend/.env
 ```
 
 Add:
 
 ```env
+VITE_RPC_URL=https://soroban-testnet.stellar.org
+VITE_NETWORK_PASSPHRASE="Test SDF Network ; September 2015"
 VITE_CONTRACT_ID=CCC7RME6HJVMKMRRUOMWUKGZKKWRAZLJ3SWN5GDU2Y5D4FCMCZ7N53PU
 ```
 
-## Run Frontend
+## Run Application
 
 ```bash
 npm run dev
@@ -184,21 +207,23 @@ stellar contract build
 
 # Yellow Belt Requirement Verification
 
-| Requirement                   | Status |
-| ----------------------------- | ------ |
-| Contract Deployed on Testnet  | ✅      |
-| Contract Called from Frontend | ✅      |
-| Transaction Status Visible    | ✅      |
-| Multi Wallet Support          | ✅      |
-| Real-Time Event Integration   | ✅      |
-| Error Handling (3+)           | ✅      |
-| Public GitHub Repository      | ✅      |
-| README Documentation          | ✅      |
+| Requirement                | Status |
+| -------------------------- | ------ |
+| Soroban Contract Deployed  | ✅      |
+| Frontend Calls Contract    | ✅      |
+| Wallet Integration         | ✅      |
+| Multi-Wallet Support       | ✅      |
+| Transaction Status Display | ✅      |
+| Real-Time Event Updates    | ✅      |
+| Error Handling Implemented | ✅      |
+| Public GitHub Repository   | ✅      |
+| README Documentation       | ✅      |
+| Screenshot Evidence        | ✅      |
 
 ---
 
 # Author
 
-Akash Mondal
+**Akash Mondal**
 
-Built for Stellar Developers Yellow Belt Level 2 Challenge.
+Built for the **Stellar Developers Yellow Belt Level 2 Challenge**.
