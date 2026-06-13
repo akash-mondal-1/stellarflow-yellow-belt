@@ -22,7 +22,7 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [donorCount, setDonorCount] = useState(142);
+  const [donorCount, setDonorCount] = useState(0);
   const [txStatus, setTxStatus] = useState<TxStatus>('idle');
   const [txHash, setTxHash] = useState<string | null>(null);
   const [latestEvent, setLatestEvent] = useState<any | null>(null);

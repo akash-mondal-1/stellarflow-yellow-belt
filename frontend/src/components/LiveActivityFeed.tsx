@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStellar, CONTRACT_ID } from '../hooks/useStellar';
 import { useAppContext } from '../contexts/AppContext';
 import { ArrowRight, Activity } from 'lucide-react';
+import * as StellarSdk from '@stellar/stellar-sdk';
 
 interface Event {
   id: string;
@@ -33,7 +34,7 @@ export const LiveActivityFeed: React.FC = () => {
         }
 
         const latest = await server.getLatestLedger();
-        const startLedger = Math.max(1, latest.sequence - 100);
+        const startLedger = Math.max(1, latest.sequence - 2000);
 
         const response = await server.getEvents({
           startLedger,
@@ -46,13 +47,28 @@ export const LiveActivityFeed: React.FC = () => {
           ]
         });
 
-        if (response.events && response.events.length > 0) {
-          const parsed = response.events.map((ev: any) => ({
-            id: `${ev.id}-${ev.ledger}-${ev.ledgerClosedAt}`,
-            donor: "G...TEST", // In production, we decode ev.topic[1] scVal
-            amount: 100, // In production, we decode ev.value scVal
-            time: new Date(ev.ledgerClosedAt)
-          }));
+        const successfulEvents = (response.events || []).filter((ev: any) => ev.inSuccessfulContractCall);
+        if (successfulEvents.length > 0) {
+          const parsed = successfulEvents.map((ev: any) => {
+            let donor = "Unknown";
+            let amount = 0;
+            try {
+              if (ev.topic && ev.topic[1]) {
+                donor = StellarSdk.scValToNative(ev.topic[1]);
+              }
+              if (ev.value) {
+                amount = Number(StellarSdk.scValToNative(ev.value)) / 1e7;
+              }
+            } catch (err) {
+              console.warn("Failed to decode event values", err);
+            }
+            return {
+              id: `${ev.id}-${ev.ledger}-${ev.ledgerClosedAt}`,
+              donor,
+              amount,
+              time: new Date(ev.ledgerClosedAt)
+            };
+          });
           setEvents(parsed);
         }
       } catch (e) {

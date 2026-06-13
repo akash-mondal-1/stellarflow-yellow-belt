@@ -1,24 +1,48 @@
+# Node
+
+node_modules/
+dist/
+
+# Environment
+
+.env
+frontend/.env
+
+# Rust build
+
+target/
+contracts/crowdfund/target/
+
 # Logs
-logs
+
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Test scripts
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+frontend/query_events.js
+frontend/simulate_donate.mjs
+frontend/submit_donate.mjs
+frontend/test_all_events.mjs
+frontend/test_events.mjs
+frontend/test_kit.mjs
+frontend/test_random_donate.mjs
+frontend/test_too_late.mjs
+
+
+# Environment
+.env
+frontend/.env
+
+# Rust
+target/
+contracts/crowdfund/target/
+
+# Test scripts
+query_events.js
+simulate_donate.mjs
+submit_donate.mjs
+test_all_events.mjs
+test_events.mjs
+test_kit.mjs
+test_random_donate.mjs
+test_too_late.mjs

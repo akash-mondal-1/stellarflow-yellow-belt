@@ -3,20 +3,24 @@ import { useStellar } from '../hooks/useStellar';
 import { useAppContext } from '../contexts/AppContext';
 import { Rocket, Target, Users } from 'lucide-react';
 import { toast } from 'sonner';
+import { useWallet } from '../contexts/WalletContext';
 
 export const CampaignDashboard: React.FC = () => {
-  const { donate, getCampaign } = useStellar();
+  const { donate, getCampaign, getTotalDonations } = useStellar();
   const { donorCount, setDonorCount, setTxStatus, setTxHash, setLatestEvent, triggerRefresh, refreshCampaign } = useAppContext();
+  const { address } = useWallet();
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const [campaignData, setCampaignData] = useState({ goal: 50000, raised: 12500, active: true });
+  const [campaignData, setCampaignData] = useState({ goal: 0, raised: 0, active: false, creator: "" });
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
     const fetchCampaign = async () => {
       const data = await getCampaign();
       setCampaignData(data);
+      const count = await getTotalDonations();
+      setDonorCount(count);
       timeoutId = setTimeout(fetchCampaign, 10000); // Real-time state refresh
     };
     fetchCampaign();
@@ -49,7 +53,7 @@ export const CampaignDashboard: React.FC = () => {
       
       const newEvent = {
         id: txHash,
-        donor: 'G_CURRENT_USER...',
+        donor: address || 'Anonymous',
         amount: numericAmount,
         time: new Date()
       };
@@ -113,14 +117,21 @@ export const CampaignDashboard: React.FC = () => {
             </div>
           </div>
           
+          <div className="bg-slate-800/40 border border-white/5 p-3 rounded-lg flex items-center gap-2 w-fit">
+            <span className="text-slate-400 text-xs uppercase tracking-wider font-semibold">Creator:</span>
+            <span className="font-mono text-sm text-stellar-accent truncate max-w-[200px]">{campaignData.creator || 'Loading...'}</span>
+          </div>
+
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-slate-800/40 rounded-xl p-4 border border-white/5 hover:border-white/10 transition-colors">
-              <div className="text-slate-400 text-sm mb-1 flex items-center gap-2"><Users size={16} /> Donors</div>
+              <div className="text-slate-400 text-sm mb-1 flex items-center gap-2"><Users size={16} /> Total Donations</div>
               <div className="text-2xl font-semibold text-white">{donorCount}</div>
             </div>
             <div className="bg-slate-800/40 rounded-xl p-4 border border-white/5 hover:border-white/10 transition-colors">
-              <div className="text-slate-400 text-sm mb-1 flex items-center gap-2"><Target size={16} /> Time Left</div>
-              <div className="text-2xl font-semibold text-white">12 Days</div>
+              <div className="text-slate-400 text-sm mb-1 flex items-center gap-2"><Target size={16} /> Status</div>
+              <div className={`text-2xl font-semibold ${campaignData.active ? 'text-green-400' : 'text-red-400'}`}>
+                {campaignData.active ? 'Active' : 'Ended'}
+              </div>
             </div>
           </div>
         </div>

@@ -45,8 +45,8 @@ graph TD
 ![StellarFlow Donation Success](/C:/Users/Asus/.gemini/antigravity-ide/brain/23e6a818-3d73-4214-8396-76ae56531724/stellarflow_donation_success_1781286579640.png)
 
 ## Smart Contract Details
-- **Testnet Contract ID**: `CBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX` (Example)
-- **Sample Contract Call Transaction Hash**: `0000000000000000000000000000000000000000000000000000000000000000` (Example)
+- **Testnet Contract ID**: `[USER_MUST_DEPLOY]`
+- **Sample Contract Call Transaction Hash**: `[USER_MUST_DEPLOY]`
 - **Asset**: Native XLM `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
 
 ## Tech Stack
@@ -56,17 +56,26 @@ graph TD
 
 ## Quick Start & Deployment
 
-### 1. Smart Contract Deployment
-Ensure you have Rust and the `soroban-cli` installed.
+### 1. Smart Contract Deployment (Checklist)
+Ensure you have Rust, Cargo, and the `stellar` CLI installed.
 ```bash
+# 1. Generate identity
+stellar keys generate deployer
+
+# 2. Fund identity
+stellar keys fund deployer --network testnet
+
+# 3. Add wasm target
 cd contracts/crowdfund
 rustup target add wasm32-unknown-unknown
-cargo build --target wasm32-unknown-unknown --release
 
-# Deploy to testnet using soroban-cli
-soroban contract deploy \
+# 4. Build contract
+stellar contract build
+
+# 5. Deploy to testnet
+stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/crowdfund.wasm \
-  --source <YOUR_IDENTITY> \
+  --source deployer \
   --network testnet
 ```
 
@@ -90,7 +99,7 @@ Configure the following in your `.env` (currently hardcoded for Testnet):
 ```env
 VITE_NETWORK_PASSPHRASE="Test SDF Network ; September 2015"
 VITE_SOROBAN_RPC_URL="https://soroban-testnet.stellar.org"
-VITE_CONTRACT_ID="CBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+VITE_CONTRACT_ID="<PASTE_NEW_CONTRACT_ID_HERE>"
 ```
 
 ## Troubleshooting
